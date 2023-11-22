@@ -9,6 +9,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static com.okavango.parking_api.entity.enumerated.Role.ROLE_CLIENT;
+
 @Entity
 @Getter
 @Setter
@@ -35,7 +37,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 25)
-    private Role role;
+    private Role role = ROLE_CLIENT;
 
     public User(String userName, String password) {
         this.userName = userName;
