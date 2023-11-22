@@ -3,6 +3,7 @@ package com.okavango.parking_api.service;
 import com.okavango.parking_api.entity.User;
 import com.okavango.parking_api.entity.dto.UserMinDTO;
 import com.okavango.parking_api.entity.dto.UserRegistrationDTO;
+import com.okavango.parking_api.exceptions.ResourceNotFoundException;
 import com.okavango.parking_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,12 @@ public class UserService {
         return userRepository.findAll().stream().map(UserMinDTO::new).toList();
     }
 
+
     // find by id
     @Transactional(readOnly = true)
     public ResponseEntity<UserMinDTO> findBy(Long id) {
+
+        String message = "Resource With Id " + id + " Not Found";
 
         Optional<User> u = userRepository.findById(id);
 
@@ -44,7 +48,7 @@ public class UserService {
             UserMinDTO userMinDTO = new UserMinDTO(user);
             return ResponseEntity.ok(userMinDTO);
         } else {
-            throw new RuntimeException("Resource Not Found");
+            throw new ResourceNotFoundException(id,message);
         }
     }
 
