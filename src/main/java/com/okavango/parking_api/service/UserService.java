@@ -48,7 +48,7 @@ public class UserService {
             UserMinDTO userMinDTO = new UserMinDTO(user);
             return ResponseEntity.ok(userMinDTO);
         } else {
-            throw new ResourceNotFoundException(id,message);
+            throw new ResourceNotFoundException(id, message);
         }
     }
 
@@ -68,6 +68,7 @@ public class UserService {
 
         return ResponseEntity.noContent().build();
     }
+
 
 
 }
