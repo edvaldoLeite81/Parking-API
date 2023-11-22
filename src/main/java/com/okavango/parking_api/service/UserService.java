@@ -54,15 +54,16 @@ public class UserService {
 
     @Transactional
     public ResponseEntity<Void> delete(Long id) {
+        String message = "Resource With Id " + id + " Not Found";
 
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("Not Found");
+            throw new ResourceNotFoundException(id, message);
         }
 
         try {
             userRepository.deleteById(id);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("ERRO");
+        } catch (ResourceNotFoundException e) {
+            throw new ResourceNotFoundException(id, e.getMessage());
         }
 
         return ResponseEntity.noContent().build();
